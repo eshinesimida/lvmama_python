@@ -48,17 +48,12 @@ class XiechengDriverService(object):
         
     def start(self):
         for url1 in self.urls:
-			try:
-				self.driver.get(url1)
-                # 将界面最大化
-                self.driver.maximize_window()
-                self.driver.implicitly_wait(30)
-                time.sleep(3)
-                self.crawlxiecheng()
-			except:
-				continue
-
-            
+            self.driver.get(url1)
+            # 将界面最大化
+            self.driver.maximize_window()
+            self.driver.implicitly_wait(30)
+            time.sleep(3)
+            self.crawlxiecheng()
 
 
 
