@@ -127,10 +127,7 @@ class XiechengDriverService(object):
         jingqu = response.xpath('//div[@class="crumbs-link"]/span[@class="crumbs-list"]/a/text()').extract()[0]
         province = response.xpath('//div[@class="crumbs-link"]/a[@class="current"]/text()').extract()[0]
         A = response.xpath("//div[@class='comment-list com-all']/div[@class='comment-li']")
-        #print jingqu,province
-        # print A
-        # #print A
-        # # 获取每个酒店的链接
+        
         for B in A:
             comment = B.xpath('div[@class="ufeed-content"]/text()').extract()
             comments = []
