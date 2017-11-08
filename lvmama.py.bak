@@ -8,16 +8,18 @@ import re
 import time
 import uuid
 import random
-from mysql import xiechengDAO
+from DAO.xiecheng import xiechengDAO
 
 class XiechengDriverService(object):
     def __init__(self):
         self.driver = webdriver.Chrome()
-        
+        #self.driver = webdriver.PhantomJS()
         self.xiechengDao = xiechengDAO()
         # 存放列表页数据
         self.listPageInfo = []
-        
+        # 存放酒店详情数据
+        self.hotelItem = {}
+        # 存放酒店评论数据
         self.commList = []
         #self.urls=['http://you.ctrip.com/sight/beijing1/234.html','http://you.ctrip.com/sight/beijing1/229.html','http://you.ctrip.com/sight/beijing1/231.html','http://you.ctrip.com/sight/yanqing770/230.html','http://you.ctrip.com/sight/beijing1/5174.html','http://you.ctrip.com/sight/beijing1/233.html','http://you.ctrip.com/sight/huairou120418/243.html']
         self.urls=[
@@ -45,7 +47,7 @@ class XiechengDriverService(object):
 
 
 ]
-        
+        # 打开携程首页
     def start(self):
         for url1 in self.urls:
             self.driver.get(url1)
@@ -64,12 +66,17 @@ class XiechengDriverService(object):
 
         ifHandle = False
 
+
+
+        #self.crawllianjie(self.driver.page_source)
+
         #获取总页面数
         pageNum = 2800
         while(pageNum>=1):
             # 循环次数加1
             loopNum = loopNum + 1
-            
+            ##allCmtComment > div.paging.orangestyle
+            ##allCmtComment > div > div.paging.orangestyle
             target = self.driver.find_element_by_css_selector(
                 '#allCmtComment > div.paging.orangestyle')
             y = target.location['y']
@@ -80,6 +87,10 @@ class XiechengDriverService(object):
             self.driver.execute_script(js)
 
             time.sleep(3)
+
+            #response = HtmlResponse(url="my HTML string", body=self.driver.page_source, encoding="utf-8")
+
+
 
 
 
@@ -98,7 +109,13 @@ class XiechengDriverService(object):
                     if u"有用" in self.driver.page_source:
                         #print(u"下一页" in self.driver.page_source)
                         pageNum = pageNum - 1
-                       
+                        #print pageNum
+                        #self.driver.maximize_window()
+                        #self.driver.implicitly_wait(30)
+                        #self.driver.find_element_by_tag_name("body").send_keys(Keys.END)
+
+                        #print response
+                        #//*[@id="allCmtComment"]/div[11]/div/a[6]
                         self.driver.find_element_by_xpath("//*[@id='allCmtComment']/div[11]/div/a[@class='nextpage']").click()
                         #mment_ctrip']/div[@class='ttd_pager cf']/div[@class='pager_v1']/a[@class='nextpage']").click()
                         ifHandle = False
