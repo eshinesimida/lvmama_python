@@ -6,7 +6,7 @@ from scrapy.http import HtmlResponse
 from datetime import datetime
 import re
 import time
-#import uuid
+import uuid
 import random
 from mysql import xiechengDAO
 
