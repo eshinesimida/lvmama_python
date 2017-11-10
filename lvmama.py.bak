@@ -15,7 +15,7 @@ class XiechengDriverService(object):
         self.driver = webdriver.Chrome()
         
         self.xiechengDao = xiechengDAO()
-        
+        # 存放列表页数据
         self.listPageInfo = []
         
         self.commList = []
